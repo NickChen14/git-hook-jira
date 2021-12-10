@@ -2,7 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 exec < /dev/tty
-read -p "do you want to add jira wroklog? (y/n)" YN
+read -p "do you want to add jira worklog? (y/n)" YN
 if [[ "$YN" != "y" && "$YN" != "Y" ]]
 then exit 0
 fi
@@ -23,10 +23,10 @@ then
   AUTH_HTTP_CODE=${AUTH_RESULT: -3}
   if test $AUTH_HTTP_CODE -eq 200
   then 
-    echo "[JIRA] jira already login!"
+    echo "\033[32m[JIRA] jira already login!\033[0m"
     JIRA_LOGIN_STATUS=$LOGIN
   else
-    echo "[JIRA] jira session expired, please login again!"
+    echo "\033[31m[JIRA] jira session expired, please login again!\033[0m"
     JIRA_LOGIN_STATUS=$LOGOUT
   fi
 fi
@@ -47,10 +47,10 @@ then
     SESSION_REGEX="\"value\":(\"\w*\")"
     SESSION_ID=$(echo $LOGIN_RESULT | grep -Eo $SESSION_REGEX | cut -d: -f2)
     printf $SESSION_ID > $SESSION_FILE_DIR
-    echo "[JIRA] jira login success!"
+    echo "\033[32m[JIRA] jira login success!\033[0m"
   else
     JIRA_LOGIN_STATUS=$LOGOUT
-    echo "[JIRA] jira login fail!"
+    echo "\033[31m[JIRA] jira login fail!\033[0m"
     exit 1
   fi
 fi
@@ -73,9 +73,9 @@ then
 
   if test $WORK_LOG_HTTP_CODE -eq 201
   then
-    echo "[JIRA] worklog adding success!"
+    echo "\033[32m[JIRA] worklog adding success!\033[0m"
   else
-    echo "[JIRA] worklog adding fail!"
+    echo "\033[31m[JIRA] worklog adding fail!\033[0m"
     exit 1
   fi
 fi
