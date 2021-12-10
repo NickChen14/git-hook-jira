@@ -21,7 +21,7 @@ then
     echo "\033[32m[JIRA] jira already login!\033[0m"
     JIRA_LOGIN_STATUS=$LOGIN
   else
-    echo "\033[31m[JIRA] jira session expired, please login again!\033[0m"
+    echo "\033[33m[JIRA] jira session expired, please login again!\033[0m"
     JIRA_LOGIN_STATUS=$LOGOUT
   fi
 fi
