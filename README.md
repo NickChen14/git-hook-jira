@@ -8,3 +8,4 @@ use git hook to add jira worklog
 4. create branch
 5. write some code
 6. git commit by using command line
+7. test
