@@ -62,7 +62,8 @@ then
   echo $ISSUE_ID
   read -p "worklog time(h): " WORK_LOG_HOUR
   SECOND_PRE_HOUR=3600
-  WORK_LOG_SECOND=`expr $WORK_LOG_HOUR \* $SECOND_PRE_HOUR`
+  WORK_LOG_SECOND=$(echo "scale=0; $WORK_LOG_HOUR * $SECOND_PRE_HOUR / 1" | bc)
+  echo $WORK_LOG_SECOND
   WORK_LOG_STARTED=$(date -v -${WORK_LOG_SECOND}S +%Y-%m-%dT%H:%M:%S.000%z);
   WORK_LOG_PAYLOAD="{\"started\": \"${WORK_LOG_STARTED}\", \"timeSpentSeconds\": \"${WORK_LOG_SECOND}\"}"
 
