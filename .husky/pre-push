@@ -73,11 +73,22 @@ then
 
   echo $WORK_LOG_HTTP_CODE
 
-  if test $WORK_LOG_HTTP_CODE -eq 201
-  then
-    echo "\033[32m[JIRA] worklog adding success!\033[0m"
-  else
-    echo "\033[31m[JIRA] worklog adding fail!\033[0m"
-    exit 1
-  fi
+  case $WORK_LOG_HTTP_CODE in 
+    201) echo "\033[32m[JIRA] worklog adding success!\033[0m"
+    ;;
+    404) echo "\033[31m[JIRA] issue does not exist!\033[0m"
+    ;;
+    403) echo "\033[31m[JIRA] you do not have permission of this issue!\033[0m"
+    ;;
+    *) echo "\033[31m[JIRA] worklog adding fail!\033[0m"
+    ;;
+  esac
+
+  # if test $WORK_LOG_HTTP_CODE -eq 201
+  # then
+  #   echo "\033[32m[JIRA] worklog adding success!\033[0m"
+  # else
+  #   echo "\033[31m[JIRA] worklog adding fail!\033[0m"
+  #   exit 1
+  # fi
 fi
