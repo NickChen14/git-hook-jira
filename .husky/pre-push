@@ -38,7 +38,7 @@ then
   echo "\n[JIRA] login jira..."
 
   LOGIN_PAYLOAD="{\"username\": \"${JIRA_USERNAME}\", \"password\": \"${JIRA_PASSWORD}\"}"
-  LOGIN_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" https://jira.104.com.tw/rest/auth/1/session --data "${LOGIN_PAYLOAD}")
+  LOGIN_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" -m 2 https://jira.104.com.tw/rest/auth/1/session --data "${LOGIN_PAYLOAD}")
   LOGIN_HTTP_CODE=${LOGIN_RESULT: -3}
 
   echo $LOGIN_HTTP_CODE
