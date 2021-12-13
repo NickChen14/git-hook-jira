@@ -41,6 +41,8 @@ then
   LOGIN_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" https://jira.104.com.tw/rest/auth/1/session --data "${LOGIN_PAYLOAD}")
   LOGIN_HTTP_CODE=${LOGIN_RESULT: -3}
 
+  echo $LOGIN_HTTP_CODE
+
   if test $LOGIN_HTTP_CODE -eq 200
   then
     JIRA_LOGIN_STATUS=$LOGIN
@@ -70,8 +72,6 @@ then
   echo "[JIRA] adding worklog..."
   WORK_LOG_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" --cookie "JSESSIONID=${SESSION_ID}" "https://jira.104.com.tw/rest/api/2/issue/${ISSUE_ID}/worklog" --data "${WORK_LOG_PAYLOAD}")
   WORK_LOG_HTTP_CODE=${WORK_LOG_RESULT: -3}
-
-  echo $WORK_LOG_HTTP_CODE
 
   case $WORK_LOG_HTTP_CODE in 
     201) 
