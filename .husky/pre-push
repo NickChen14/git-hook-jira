@@ -19,7 +19,7 @@ SESSION_ID=$(cat $SESSION_FILE_DIR)
 if [[ "$SESSION_ID" != "" ]]
 then 
   echo "[JIRA] check jira login status..."
-  AUTH_RESULT=$(curl -s -w "%{http_code}" --request GET -H "Content-Type:application/json" --cookie "JSESSIONID=${SESSION_ID}" https://jira.104.com.tw/rest/auth/1/session)
+  AUTH_RESULT=$(curl -s -w "%{http_code}" --request GET -H "Content-Type:application/json" --cookie "JSESSIONID=${SESSION_ID}" -m 20 https://jira.104.com.tw/rest/auth/1/session)
   AUTH_HTTP_CODE=${AUTH_RESULT: -3}
   if test $AUTH_HTTP_CODE -eq 200
   then 
@@ -38,7 +38,7 @@ then
   echo "\n[JIRA] login jira..."
 
   LOGIN_PAYLOAD="{\"username\": \"${JIRA_USERNAME}\", \"password\": \"${JIRA_PASSWORD}\"}"
-  LOGIN_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" -m 2 https://jira.104.com.tw/rest/auth/1/session --data "${LOGIN_PAYLOAD}")
+  LOGIN_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" -m 20 https://jira.104.com.tw/rest/auth/1/session --data "${LOGIN_PAYLOAD}")
   LOGIN_HTTP_CODE=${LOGIN_RESULT: -3}
 
   echo $LOGIN_HTTP_CODE
@@ -75,7 +75,7 @@ then
   WORK_LOG_PAYLOAD="{\"started\": \"${WORK_LOG_STARTED}\", \"timeSpentSeconds\": \"${WORK_LOG_SECOND}\"}"
 
   echo "[JIRA] adding worklog..."
-  WORK_LOG_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" --cookie "JSESSIONID=${SESSION_ID}" "https://jira.104.com.tw/rest/api/2/issue/${ISSUE_ID}/worklog" --data "${WORK_LOG_PAYLOAD}")
+  WORK_LOG_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" --cookie "JSESSIONID=${SESSION_ID}" -m 20 "https://jira.104.com.tw/rest/api/2/issue/${ISSUE_ID}/worklog" --data "${WORK_LOG_PAYLOAD}")
   WORK_LOG_HTTP_CODE=${WORK_LOG_RESULT: -3}
 
   case $WORK_LOG_HTTP_CODE in 
