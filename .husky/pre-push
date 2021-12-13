@@ -43,18 +43,23 @@ then
 
   echo $LOGIN_HTTP_CODE
 
-  if test $LOGIN_HTTP_CODE -eq 200
-  then
-    JIRA_LOGIN_STATUS=$LOGIN
-    SESSION_REGEX="\"value\":(\"\w*\")"
-    SESSION_ID=$(echo $LOGIN_RESULT | grep -Eo $SESSION_REGEX | cut -d: -f2)
-    printf $SESSION_ID > $SESSION_FILE_DIR
-    echo "\033[32m[JIRA] jira login success!\033[0m"
-  else
-    JIRA_LOGIN_STATUS=$LOGOUT
-    echo "\033[31m[JIRA] jira login fail!\033[0m"
-    exit 1
-  fi
+  case $WORK_LOG_HTTP_CODE in 
+    200) 
+      JIRA_LOGIN_STATUS=$LOGIN
+      SESSION_REGEX="\"value\":(\"\w*\")"
+      SESSION_ID=$(echo $LOGIN_RESULT | grep -Eo $SESSION_REGEX | cut -d: -f2)
+      printf $SESSION_ID > $SESSION_FILE_DIR
+      echo "\033[32m[JIRA] jira login success!\033[0m"
+      ;;
+    401) 
+      echo "\033[31m[JIRA] your username or password is wrong!\033[0m"
+      exit 1
+      ;;
+    *) 
+      "\033[31m[JIRA] jira login fail!\033[0m"
+      exit 1
+      ;;
+  esac
 fi
 
 if [[ "$JIRA_LOGIN_STATUS" == "$LOGIN" ]]
