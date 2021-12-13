@@ -56,7 +56,7 @@ then
       exit 1
       ;;
     *) 
-      "\033[31m[JIRA] jira login fail!\033[0m"
+      echo "\033[31m[JIRA] jira login fail!\033[0m"
       exit 1
       ;;
   esac
