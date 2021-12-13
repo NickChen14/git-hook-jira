@@ -41,8 +41,6 @@ then
   LOGIN_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" -m 20 https://jira.104.com.tw/rest/auth/1/session --data "${LOGIN_PAYLOAD}")
   LOGIN_HTTP_CODE=${LOGIN_RESULT: -3}
 
-  echo $LOGIN_HTTP_CODE
-
   case $LOGIN_HTTP_CODE in 
     200) 
       JIRA_LOGIN_STATUS=$LOGIN
