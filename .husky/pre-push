@@ -71,6 +71,8 @@ then
   WORK_LOG_RESULT=$(curl -s -w "%{http_code}" --request POST -H "Content-Type:application/json" --cookie "JSESSIONID=${SESSION_ID}" "https://jira.104.com.tw/rest/api/2/issue/${ISSUE_ID}/worklog" --data "${WORK_LOG_PAYLOAD}")
   WORK_LOG_HTTP_CODE=${WORK_LOG_RESULT: -3}
 
+  echo $WORK_LOG_HTTP_CODE
+
   if test $WORK_LOG_HTTP_CODE -eq 201
   then
     echo "\033[32m[JIRA] worklog adding success!\033[0m"
